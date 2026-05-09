@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { registerUser } from "../../managers/AuthManager"
@@ -11,11 +11,12 @@ export const Register = ({setToken}) => {
   const bio = useRef()
   const password = useRef()
   const verifyPassword = useRef()
-  const passwordDialog = useRef()
   const navigate = useNavigate()
+  const [errors, setErrors] = useState([])
 
   const handleRegister = (e) => {
     e.preventDefault()
+    setErrors([])
     
     if (password.current.value === verifyPassword.current.value) {
       const newUser = {
@@ -32,10 +33,16 @@ export const Register = ({setToken}) => {
           if ("valid" in res && res.valid) {
             setToken(res.token, res.user_id, res.is_staff)
             navigate("/")
+          } else {
+            const messages = res && typeof res === "object"
+              ? Object.values(res).flat().filter(v => typeof v === "string")
+              : []
+            setErrors(messages.length ? messages : ["Registration failed. Please try again."])
           }
         })
+        .catch(() => setErrors(["Could not reach the server. Please try again."]))
     } else {
-      passwordDialog.current.showModal()
+      setErrors(["Passwords do not match."])
     }
   }
 
@@ -104,6 +111,10 @@ export const Register = ({setToken}) => {
             <Link to="/login" className="button is-link is-light">Cancel</Link>
           </div>
         </div>
+
+        {errors.map((msg, i) => (
+          <p key={i} className="help is-danger">{msg}</p>
+        ))}
 
       </form>
     </section>
