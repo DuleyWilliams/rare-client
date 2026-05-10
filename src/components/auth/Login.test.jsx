@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom"
 import { Login } from "./Login"
 
 const renderLogin = (props = {}) => {
-  const setToken = jest.fn()
+  const setToken = vi.fn()
   render(
     <BrowserRouter>
       <Login setToken={setToken} {...props} />
@@ -29,7 +29,7 @@ describe("Login", () => {
   })
 
   test("shows error message on failed login", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({ json: () => Promise.resolve({ valid: false }) })
     )
 
@@ -45,7 +45,7 @@ describe("Login", () => {
   })
 
   test("calls setToken on successful login", async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve({
           valid: true,
