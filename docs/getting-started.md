@@ -164,10 +164,10 @@ npm install
 ## 8. Start the frontend
 
 ```bash
-npm start
+npm run dev
 ```
 
-The dev server starts at `http://localhost:3000` by default. The API base URL is hardcoded in [`src/managers/api.js`](../src/managers/api.js):
+The dev server starts at `http://localhost:3000` by default (powered by Vite). The API base URL is hardcoded in [`src/managers/api.js`](../src/managers/api.js):
 
 ```js
 export const API = "http://localhost:8000"
@@ -193,7 +193,9 @@ Test discovery is configured in [`rare-api/pytest.ini`](../../rare-api/pytest.in
 npm test
 ```
 
-A test file exists for the Login component at `src/components/auth/Login.test.js`.
+Tests run via Vitest. `npm test` runs all tests once; `npm run test:watch` reruns on file changes.
+
+A test file exists for the Login component at `src/components/auth/Login.test.jsx`.
 
 ---
 
@@ -216,7 +218,7 @@ python manage.py runserver
 # Terminal 3 — frontend
 cd rare-client
 npm install                           # first time only
-npm start
+npm run dev
 ```
 
 ---
