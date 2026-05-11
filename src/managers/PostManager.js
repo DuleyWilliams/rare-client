@@ -97,8 +97,11 @@ export const getApprovedPosts = () => {
   }).then(res => res.json())
 }
 
-export const searchPosts = (query) => {
-  return fetch(`${API}/posts/search?q=${encodeURIComponent(query)}`, {
+export const searchPosts = (query, author = '') => {
+  const params = new URLSearchParams()
+  if (query)  params.set('q', query)
+  if (author) params.set('author', author)
+  return fetch(`${API}/posts/search?${params.toString()}`, {
     headers: authHeader()
   }).then(res => res.json())
 }
