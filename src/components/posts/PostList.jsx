@@ -9,6 +9,7 @@ export const PostList = () => {
   const [categories, setCategories] = useState([])
   const [tags, setTags] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("")
+  const currentUserId = parseInt(localStorage.getItem('current_user_id'))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -64,6 +65,9 @@ export const PostList = () => {
             <tr key={post.id}>
               <td>
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                {!post.approved && post.user.id === currentUserId && (
+                  <span className="tag is-warning ml-2">Pending Review</span>
+                )}
               </td>
               <td>{post.user.username}</td>
               <td>{post.category ? post.category.label : "—"}</td>

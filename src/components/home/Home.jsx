@@ -13,7 +13,17 @@ export const Home = () => {
     <div className="container">
       <h2 className="title is-4 mt-4">Posts from Subscriptions</h2>
       {subscribedPosts.length === 0 ? (
-        <p>No posts from subscribed authors yet.</p>
+        <div className="notification is-info is-light mt-4">
+          <p className="mb-2">
+            <strong>Your subscription feed is empty.</strong>
+          </p>
+          <p className="mb-3">
+            This page shows posts from authors you follow. You have not subscribed to any authors yet, so there is nothing to display here.
+          </p>
+          <p>
+            Browse <Link to="/posts">all posts</Link> to discover authors worth following.
+          </p>
+        </div>
       ) : (
         <table className="table is-fullwidth is-striped">
           <thead>

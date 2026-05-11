@@ -39,6 +39,11 @@ export const PostDetail = ({ isAdmin }) => {
   return (
     <section className="section">
       <div className="container">
+        {isAuthor && !post.approved && (
+          <div className="notification is-warning">
+            This post is pending review and is not yet visible to other users.
+          </div>
+        )}
         <h1 className="title">{post.title}</h1>
         <p className="subtitle">
           By <Link to={`/profiles/${post.user.id}`}>{post.user.username}</Link>
