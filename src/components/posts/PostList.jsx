@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { getAllPosts } from "../../managers/PostManager"
 import { getCategories } from "../../managers/CategoryManager"
 import { getTags } from "../../managers/TagManager"
+import { PostCard } from "./PostCard"
 
 export const PostList = () => {
   const [posts, setPosts] = useState([])
   const [categories, setCategories] = useState([])
   const [tags, setTags] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("")
-  const currentUserId = parseInt(localStorage.getItem('current_user_id'))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -51,31 +51,13 @@ export const PostList = () => {
           </div>
         </div>
       </div>
-      <table className="table is-fullwidth is-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Category</th>
-            <th>Published</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredPosts.map(post => (
-            <tr key={post.id}>
-              <td>
-                <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                {!post.approved && post.user.id === currentUserId && (
-                  <span className="tag is-warning ml-2">Pending Review</span>
-                )}
-              </td>
-              <td>{post.user.username}</td>
-              <td>{post.category ? post.category.label : "—"}</td>
-              <td>{post.publication_date}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="columns is-multiline mt-2">
+        {filteredPosts.map(post => (
+          <div key={post.id} className="column is-full-mobile is-half-tablet is-one-third-desktop">
+            <PostCard post={post} />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

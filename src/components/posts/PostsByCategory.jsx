@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { getPostsByCategory } from "../../managers/PostManager"
+import { PostCard } from "./PostCard"
 
 export const PostsByCategory = () => {
   const { categoryId } = useParams()
@@ -23,26 +24,13 @@ export const PostsByCategory = () => {
       {posts.length === 0 ? (
         <p>No approved posts in this category yet.</p>
       ) : (
-        <table className="table is-fullwidth is-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Published</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map(post => (
-              <tr key={post.id}>
-                <td>
-                  <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                </td>
-                <td>{post.user.username}</td>
-                <td>{post.publication_date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="columns is-multiline">
+          {posts.map(post => (
+            <div key={post.id} className="column is-full-mobile is-half-tablet is-one-third-desktop">
+              <PostCard post={post} />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )
