@@ -21,6 +21,7 @@ import { CommentEdit } from "../components/comments/CommentEdit"
 import { CommentCreate } from "../components/comments/CommentCreate"
 import { UserProfileList } from "../components/users/UserProfileList"
 import { UserProfileDetail } from "../components/users/UserProfileDetail"
+import { ProfileEdit } from "../components/users/ProfileEdit"
 import { UserPostList } from "../components/users/UserPostList"
 import { UserTypeForm } from "../components/users/UserTypeForm"
 import { Home } from "../components/home/Home"
@@ -52,6 +53,7 @@ export const ApplicationViews = ({ token, setToken, isAdmin }) => {
         <Route path="/comments/:commentId/edit" element={<CommentEdit />} />
         <Route path="/profiles/:userId" element={<UserProfileDetail />} />
         <Route path="/profiles/:userId/posts" element={<UserPostList />} />
+        <Route path="/profiles/:userId/edit" element={<ProfileEdit />} />
         <Route element={<AdminOnly isAdmin={isAdmin} />}>
           <Route path="/tags/new" element={<TagCreate />} />
           <Route path="/tags/:tagId/edit" element={<TagEdit />} />

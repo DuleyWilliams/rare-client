@@ -67,6 +67,10 @@ export const UserProfileDetail = () => {
               <td>{profile.full_name || "—"}</td>
             </tr>
             <tr>
+              <th>Bio</th>
+              <td>{profile.bio || "—"}</td>
+            </tr>
+            <tr>
               <th>Display Name</th>
               <td>{profile.username}</td>
             </tr>
@@ -98,6 +102,11 @@ export const UserProfileDetail = () => {
           <Link to={`/profiles/${userId}/posts`} className="button is-link">
             View Posts
           </Link>
+          {String(userId) === String(currentUserId) && (
+            <Link to={`/profiles/${userId}/edit`} className="button is-info ml-2">
+              Edit Profile
+            </Link>
+          )}
           {String(userId) !== String(currentUserId) && (
             profile.is_subscribed ? (
               <button
