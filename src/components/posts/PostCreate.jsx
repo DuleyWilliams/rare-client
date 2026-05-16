@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import ReactMarkdown from 'react-markdown'
 import { createPost, uploadPostImage } from "../../managers/PostManager"
 import { getCategories } from "../../managers/CategoryManager"
 
 export const PostCreate = () => {
   const [categories, setCategories] = useState([])
+  const [showPreview, setShowPreview] = useState(false)
   const titleRef = useRef()
   const categoryRef = useRef()
   const fileRef = useRef()
@@ -65,7 +67,25 @@ export const PostCreate = () => {
         <div className="field">
           <label className="label">Content</label>
           <div className="control">
-            <textarea className="textarea" ref={contentRef} required />
+            <textarea
+              className={`textarea${showPreview ? ' is-hidden' : ''}`}
+              ref={contentRef}
+              required
+            />
+            {showPreview && (
+              <div className="content box mt-2">
+                <ReactMarkdown>{contentRef.current?.value || ''}</ReactMarkdown>
+              </div>
+            )}
+          </div>
+          <div className="control mt-2">
+            <button
+              className="button is-light is-small"
+              type="button"
+              onClick={() => setShowPreview(p => !p)}
+            >
+              {showPreview ? 'Edit' : 'Preview'}
+            </button>
           </div>
         </div>
         <div className="control">
